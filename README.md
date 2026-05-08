@@ -10,6 +10,7 @@ Command-line tool for executing StorageGRID custom S3 operations (NetApp proprie
 - Check last access time settings
 - Human-readable formatted output
 - Flexible credential management: config file, CLI flags, or interactive prompts
+- AWS Signature Version 2 and Version 4 support (v4 by default)
 
 ## Requirements
 
@@ -35,6 +36,12 @@ python sg_custom_ops.py -r lastaccesstime
 # Override endpoint and credentials via CLI
 python sg_custom_ops.py -e https://host:10444 -a ACCESS_KEY -s SECRET_KEY
 
+# Use AWS Signature Version 2 (legacy)
+python sg_custom_ops.py --sig-version v2
+
+# Use AWS Signature Version 4 with a specific region
+python sg_custom_ops.py --sig-version v4 --region us-west-2
+
 # Use a custom config file
 python sg_custom_ops.py -c /path/to/config.conf
 ```
@@ -48,7 +55,10 @@ Create `sg_custom_ops.conf` in the same directory as the script:
 endpoint = https://your-storagegrid-host:10444
 access_key = YOUR_ACCESS_KEY
 secret_key = YOUR_SECRET_KEY
+region = us-east-1
 ```
+
+The `region` field is optional and defaults to `us-east-1`. It is only used with Signature Version 4.
 
 Protect the file:
 
